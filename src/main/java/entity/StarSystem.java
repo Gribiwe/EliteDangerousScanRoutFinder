@@ -1,24 +1,22 @@
 package entity;
 
-public class StarSystem implements Comparable<StarSystem>{
+import java.util.List;
 
-   private double distance;
-   private String name;
+public class StarSystem extends Star implements Comparable<StarSystem>{
 
-   public StarSystem(double distance, String name) {
-      this.distance = distance;
-      this.name = name;
+
+   private List<Planet> planets;
+
+   public StarSystem(double distance, String name, List<Planet> planets) {
+      super(distance, name);
+      this.planets = planets;
    }
 
-   public double getDistance() {
-      return distance;
-   }
-
-   public String getName() {
-      return name;
+   public List<Planet> getPlanets() {
+      return planets;
    }
 
    public int compareTo(StarSystem o) {
-      return (int) ((o.getDistance()-this.getDistance())*100);
+      return (int) ((this.getDistance()-o.getDistance())*100);
    }
 }

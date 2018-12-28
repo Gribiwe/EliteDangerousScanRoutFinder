@@ -1,34 +1,26 @@
 package entity;
 
 public enum Planet {
+   EARTH_LIKE("Earth-like world"),
+   WATER_WORLD("Water world"),
+   AMIAC_PLANET("Ammonia world");
 
-   HIGHT_METAL_TERRAFORMABLE("High metal content world", true, 420000),
-   HIGHT_METAL_NOT_TERRAFORMABLE("High metal content world", false, 37000),
-   EARTH_LIKE("Earth-like world", false, 670000),
-   WATER_WORLD("Water world", false, 156000),
-   WATER_WORLD_TERRAFORMABLE("Water world", true, 695000),
-   ROCK_TERRAFORMABLE("Rocky body", true, 285000),
-   AMIAC_PLANET("Ammonia world", false, 410000);
-
-   Planet(String valueAtJSON, boolean terraformable, int price) {
-      this.price = price;
-      this.terraformable = terraformable;
-      this.valueAtJSON = valueAtJSON;
+   Planet(String typeName) {
+      this.typeName = typeName;
    }
 
-   private final int price;
-   private final String valueAtJSON;
-   private final boolean terraformable;
+   private final String typeName;
 
-   public int getPrice() {
-      return price;
+   public static Planet getByTypeName(String typeName) {
+      for (Planet value : Planet.values()) {
+         if (value.getTypeName().equals(typeName)) {
+            return value;
+         }
+      }
+      throw new RuntimeException("Planet type not found: "+typeName);
    }
 
-   public String getValueAtJSON() {
-      return valueAtJSON;
-   }
-
-   public boolean isTerraformable() {
-      return terraformable;
+   public String getTypeName() {
+      return typeName;
    }
 }

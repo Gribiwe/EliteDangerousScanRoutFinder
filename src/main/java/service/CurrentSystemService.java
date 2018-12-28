@@ -12,7 +12,7 @@ public class CurrentSystemService {
    private static final JSONParser parser = new JSONParser();
 
    public static String getCommanderCurrentSystem(Commander commander) throws Exception {
-      final String answer = EDSMHttpSender.sendGet(ENDPOINT_NAME, COMMANDER_NAME_PARAM + "=" + commander.getName(), COMMANDER_KEY_PARAM + "=" + commander.getApiKey());
+      final String answer = HttpSender.sendGet(ENDPOINT_NAME, COMMANDER_NAME_PARAM + "=" + commander.getName(), COMMANDER_KEY_PARAM + "=" + commander.getApiKey());
       JSONObject jsonObject = (JSONObject) parser.parse(answer);
       return jsonObject.get("system").toString();
    }
