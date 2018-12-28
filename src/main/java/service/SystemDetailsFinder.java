@@ -25,7 +25,6 @@ public class SystemDetailsFinder {
          JSONObject jsonAnswer = (JSONObject) parser.parse(answer);
          JSONArray bodies = (JSONArray) jsonAnswer.get("bodies");
          List<Planet> planets = new ArrayList<Planet>();
-         System.out.println(jsonAnswer);
          for (Object body : bodies) {
             JSONObject bodyJSON = (JSONObject) body;
             String type = bodyJSON.get("type").toString();

@@ -24,14 +24,11 @@ public class SystemFinder {
          String radiusParamValue = RADIUS_PARAM + "=" + radius;
          String answer = EDSMHttpSender.sendGet(ENDPOINT_NAME, startSystemParamValue, radiusParamValue);
          JSONArray jsonArray = (JSONArray) parser.parse(answer);
-         Iterator iterator = jsonArray.iterator();
-         System.out.println(jsonArray.toJSONString());
-         while (iterator.hasNext()) {
-            Object next = iterator.next();
+         for (Object next : jsonArray) {
             double distance = Double.parseDouble(((JSONObject) next).get("distance").toString());
 //            if (distance != 0) {
-               String name = ((JSONObject) next).get("name").toString();
-               starSystems.add(new StarSystem(distance, name));
+            String name = ((JSONObject) next).get("name").toString();
+            starSystems.add(new StarSystem(distance, name));
 //            }
          }
 

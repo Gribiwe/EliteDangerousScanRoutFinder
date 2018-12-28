@@ -1,6 +1,9 @@
+import entity.Commander;
 import entity.DetailedStarSystem;
 import entity.Planet;
 import entity.StarSystem;
+import service.CurrentSystemService;
+import service.StationService;
 import service.SystemDetailsFinder;
 import service.SystemFinder;
 
@@ -9,13 +12,22 @@ import java.util.Collections;
 import java.util.List;
 
 public class Main {
-   public static void main(String[] args) {
-      List<StarSystem> nearStartSystems = SystemFinder.findNearStartSystems("Col 285 Sector RF-M c8-10", 34);
+   public static void main(String[] args) throws Exception {
+      getBestStars(Commander.GRIBIWE, 10);
+      getBestStars(Commander.MARTELLY, 40);
+   }
+
+   private static void getBestStars(Commander commander, int radius) throws Exception {
+      System.out.println("\n\nBEST STARS IN "+radius+" LY FOR "+commander.getName());
+      final String startSystemName = CurrentSystemService.getCommanderCurrentSystem(commander);
+      List<StarSystem> nearStartSystems = SystemFinder.findNearStartSystems(startSystemName, radius);
 
       List<DetailedStarSystem> detailedStarSystems = new ArrayList<DetailedStarSystem>();
       Collections.sort(detailedStarSystems);
       for (StarSystem nearStartSystem : nearStartSystems) {
-         detailedStarSystems.add(SystemDetailsFinder.getDetails(nearStartSystem));
+         if (!StationService.isPopulated(nearStartSystem.getName())) {
+            detailedStarSystems.add(SystemDetailsFinder.getDetails(nearStartSystem));
+         }
       }
       for (DetailedStarSystem detailedStarSystem : detailedStarSystems) {
          int waterCount = 0;
